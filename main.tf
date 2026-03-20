@@ -52,8 +52,7 @@ module "ebs_csi_pod_identity" {
 }
 
 module "eks" {
-  source  = "terraform-aws-modules/eks/aws"
-  version = "21.11.0"
+  source = "git::https://github.com/ns-mkusper/terraform-aws-eks.git?ref=58f5602f575663b65c712a5de8ca67f42368ed17"
 
   name               = var.project_name
   kubernetes_version = var.kubernetes_version
