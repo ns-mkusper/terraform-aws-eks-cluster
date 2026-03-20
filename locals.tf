@@ -84,6 +84,26 @@ locals {
           effect = taint.effect
         }
       }
+
+      # Explicitly manage launch templates so root disk sizing is stable and
+      # reproducible across rolling updates/reconciliations.
+      create_launch_template                 = true
+      use_custom_launch_template             = true
+      update_launch_template_default_version = true
+
+      block_device_mappings = {
+        root = {
+          device_name = "/dev/xvda"
+          ebs = {
+            delete_on_termination = true
+            encrypted             = true
+            volume_size           = coalesce(config.disk_size, 20)
+            volume_type           = "gp3"
+            iops                  = 3000
+            throughput            = 125
+          }
+        }
+      }
     }
   }
 
