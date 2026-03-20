@@ -6,7 +6,8 @@ data "aws_vpc_endpoint_service" "interface" {
 }
 
 resource "aws_security_group" "vpc_endpoints" {
-  name        = "${var.project_name}-vpc-endpoints-sg"
+  # Keep stable naming to avoid forced SG replacement on existing clusters.
+  name        = "${var.vpc_id}-vpc-endpoints-sg"
   description = "Security group for VPC endpoints in VPC ${var.vpc_id} for the ${var.project_name} project"
   vpc_id      = var.vpc_id
 
